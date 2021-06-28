@@ -50,19 +50,6 @@ public class VentanaPrincipal extends JDialog {
 
     }
 
-    public void iniciarPanelFiltro() {
-        this.lFiltro = new JLabel("Ingrese el ISBN: ");
-        this.panelFiltro = new JPanel();
-        this.panelFiltro.setLayout(new FlowLayout(FlowLayout.LEFT));
-        this.tFiltro = new JTextField(10);
-        this.bBuscar = new JButton("Buscar");
-
-        this.panelFiltro.add(this.lFiltro);
-        this.panelFiltro.add(this.tFiltro);
-        this.panelFiltro.add(this.bBuscar);
-
-        this.contenedor.add(this.panelFiltro, BorderLayout.NORTH);
-    }
 
     public void iniciarPanelResultado() {
         this.panelResultado = new JScrollPane();
@@ -70,22 +57,16 @@ public class VentanaPrincipal extends JDialog {
         this.modelo1 = new DefaultTableModel(null, this.pregrado);
         this.tablaPregrado.setModel(modelo1);
         this.panelResultado.setViewportView(this.tablaPregrado);
-
-        this.panelResultado = new JScrollPane();
-        this.tablaPostGrado = new JTable();
-        this.modelo2 = new DefaultTableModel(null, this.pregrado);
-        this.tablaPostGrado.setModel(modelo1);
-        this.panelResultado.setViewportView(this.tablaPregrado);
-
         this.contenedor.add(this.panelResultado, BorderLayout.CENTER);
 
     }
+
 
     public void actualizarTablaPregrado() {
         List<Pregrado> listado = this.gestor.leer();
         this.modelo1.setNumRows(0);
         for (Pregrado pregrado : listado) {
-            String linea[] = {""+pregrado.getNoDocumento(),pregrado.getNombre(),pregrado.getApellido()+
+            String linea[] = {""+pregrado.getNoDocumento(),pregrado.getNombre(),pregrado.getApellido(),
                     pregrado.getProgramaPosgrado(),""+pregrado.getSemestre(),""+pregrado.getCorte1(),""+pregrado.getCorte2(),""+pregrado.getCorte3()};
             this.modelo1.addRow(linea);
         }
@@ -94,11 +75,11 @@ public class VentanaPrincipal extends JDialog {
 
     public void actualizarTablaPostGrado() {
         List<Posgrado> listado = this.gestor2.leer();
-        this.modelo1.setNumRows(0);
+        this.modelo2.setNumRows(0);
         for (Posgrado posgrado : listado) {
-            String linea[] = {""+posgrado.getNoDocumento(),posgrado.getNombre(),posgrado.getApellido()+
+            String linea[] = {""+posgrado.getNoDocumento(),posgrado.getNombre(),posgrado.getApellido(),
                     posgrado.getProgramaPosgrado(),""+posgrado.getSemestre(),""+posgrado.getPromedioSemestre()};
-            this.modelo1.addRow(linea);
+            this.modelo2.addRow(linea);
         }
 
     }
