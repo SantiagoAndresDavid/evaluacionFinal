@@ -2,7 +2,9 @@ package vista;
 
 
 
+import Negocio.RegistroPosgrado;
 import Negocio.RegistroPregrado;
+import dominio.Posgrado;
 import dominio.Pregrado;
 
 import javax.swing.*;
@@ -17,18 +19,20 @@ public class VentanaPrincipal extends JDialog {
     private JScrollPane panelResultado;
     private JLabel lFiltro;
     private JTextField tFiltro;
-    private JTable tabla;
+    private JTable tablaPregrado,tablaPostGrado;
     private DefaultTableModel modelo1,modelo2;
     private JButton bBuscar;
     private String pregrado[] = {"NoDocumento", "Nombre", "Apellido", "ProgramaPregrado", "Semestre","Corte 1","Corte2","Corte3"};
     private String postGrado[] = {"NoDocumento", "Nombre", "Apellido", "ProgramaPregrado", "Semestre","Promedio"};
     private RegistroPregrado gestor;
+    private RegistroPosgrado gestor2;
 
 
     public VentanaPrincipal(JFrame frame, boolean bln) {
         super(frame, bln);
         this.gestor = new RegistroPregrado();
-        this.setTitle("Consulta de Publicaciones - V1");
+        this.gestor2 = new RegistroPosgrado();
+        this.setTitle("ventana Principal");
         this.iniciarComponentes();
         this.pack();
         this.setSize(1000, 500);
@@ -43,7 +47,7 @@ public class VentanaPrincipal extends JDialog {
         this.contenedor.setLayout(new BorderLayout());
         this.iniciarPanelResultado();
         this.actualizarTablaPregrado();
-   
+
     }
 
     public void iniciarPanelFiltro() {
@@ -62,10 +66,16 @@ public class VentanaPrincipal extends JDialog {
 
     public void iniciarPanelResultado() {
         this.panelResultado = new JScrollPane();
-        this.tabla = new JTable();
+        this.tablaPregrado = new JTable();
         this.modelo1 = new DefaultTableModel(null, this.pregrado);
-        this.tabla.setModel(modelo1);
-        this.panelResultado.setViewportView(this.tabla);
+        this.tablaPregrado.setModel(modelo1);
+        this.panelResultado.setViewportView(this.tablaPregrado);
+
+        this.panelResultado = new JScrollPane();
+        this.tablaPostGrado = new JTable();
+        this.modelo2 = new DefaultTableModel(null, this.pregrado);
+        this.tablaPostGrado.setModel(modelo1);
+        this.panelResultado.setViewportView(this.tablaPregrado);
 
         this.contenedor.add(this.panelResultado, BorderLayout.CENTER);
 
@@ -81,6 +91,18 @@ public class VentanaPrincipal extends JDialog {
         }
 
     }
+
+    public void actualizarTablaPostGrado() {
+        List<Posgrado> listado = this.gestor2.leer();
+        this.modelo1.setNumRows(0);
+        for (Posgrado posgrado : listado) {
+            String linea[] = {""+posgrado.getNoDocumento(),posgrado.getNombre(),posgrado.getApellido()+
+                    posgrado.getProgramaPosgrado(),""+posgrado.getSemestre(),""+posgrado.getPromedioSemestre()};
+            this.modelo1.addRow(linea);
+        }
+
+    }
+
 
 
     public void ventanaMsg(String msg, String titulo, int tipo) {

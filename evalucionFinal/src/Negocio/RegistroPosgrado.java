@@ -1,25 +1,28 @@
 package Negocio;
 
+import Datos.ArchivoPosgrado;
 import Datos.ArchivoPregrado;
 import Datos.IAccesoDatosPregrado;
+import Datos.IAccesoPosgrado;
+import dominio.Posgrado;
 import dominio.Pregrado;
 
 import java.io.IOException;
 import java.util.List;
 
 public class RegistroPosgrado {
-    private IAccesoDatosPregrado datos;
+    private IAccesoPosgrado datos;
 
     public RegistroPosgrado() {
-        this.datos = new ArchivoPregrado();
+        this.datos = new ArchivoPosgrado();
     }
 
-    public void insertar(Pregrado pregrado) throws IOException {
+    public void insertar(Posgrado posgrado) throws IOException {
 
-        datos.insertarPublicacion(pregrado);
+        datos.insertarPublicacion(posgrado);
     }
 
-    public List<Pregrado> leer() {
+    public List<Posgrado> leer() {
         try {
             return datos.leerPublicaciones();
         } catch (IOException e) {
@@ -28,7 +31,7 @@ public class RegistroPosgrado {
         return null;
     }
 
-    public Pregrado buscarPor(int buscar) {
+    public Posgrado buscarPor(int buscar) {
         try {
             return datos.buscarPublicacion(buscar);
         } catch (IOException e) {

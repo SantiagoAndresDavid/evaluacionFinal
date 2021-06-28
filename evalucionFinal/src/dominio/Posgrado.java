@@ -71,4 +71,16 @@ public class Posgrado {
     public String getDataText(){
         return this.NoDocumento+";"+this.nombre+";"+this.apellido+";"+this.ProgramaPosgrado+";"+this.Semestre+";"+this.PromedioSemestre;
     }
+
+    @Override
+    public String toString() {
+        return "Posgrado{" +
+                "NoDocumento=" + NoDocumento +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", ProgramaPosgrado='" + ProgramaPosgrado + '\'' +
+                ", Semestre=" + Semestre +
+                ", PromedioSemestre=" + PromedioSemestre +
+                '}';
+    }
 }
